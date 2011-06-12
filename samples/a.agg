@@ -1,0 +1,17 @@
+-- $ haml this > index.html
+%html
+  %head
+    %script{type: 'text/javascript', src: 'http://code.jquery.com/jquery-1.6.1.min.js'}
+    %script{type: 'text/javascript', src: 'a.js'}
+  %body
+    .main{width: '100%'}
+-- $ coffee -cp this > a.js
+#json = {'the': 2.3, 'apple': 4.5, 'cool': 1.2}
+$ ->
+  $.getJSON 'http://ujihisa.shiracha.net/a.json?callback=?', {}, (json) ->
+    $('.main').html view(json)
+view = (json) ->
+  max = $.map(Object.keys(json), ((x) -> json[x])).sort().slice(-1)
+  column = (key, value) ->
+    "<tr><td>#{key}</td><td>#{value}</td><td>#{('-' for x in [0..(20 * (value / max))]).join('')}</td></tr>"
+  '<table border=1>' + (column(key, value) for key, value of json).join("\n") + '</table>'
