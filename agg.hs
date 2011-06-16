@@ -11,12 +11,12 @@ main = do
      then do
        file <- readFile $ head args
        let chunks = chunkize (lines file)
-       forM_ chunks $ \chunk -> do
+       forM_ chunks $ \(header:body) -> do
          tempdir <- getTemporaryDirectory
          (tmpfile, handle) <- openTempFile tempdir "a"
          hClose handle
-         writeFile tmpfile (unlines $ tail chunk)
-         let cmd = gsub (head chunk) "^-- \\$ " ""
+         writeFile tmpfile (unlines body)
+         let cmd = gsub header "^-- \\$ " ""
          putStrLn $ "$ " ++ cmd
          S.system $ gsub cmd "this" tmpfile
      else
