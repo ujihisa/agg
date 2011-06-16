@@ -26,6 +26,6 @@ chunkize :: [String] -> [[String]]
 chunkize ss = reverse $ map reverse $ foldl f [] ss
   where
     f :: [[String]] -> String -> [[String]]
-    f xs s = if s =~ "^-- \\$ "
-                then ([s] : xs)
-                else ((s : head xs) : tail xs)
+    f xs s
+      | s =~ "^-- \\$ " = [s] : xs
+      | otherwise       = ((s : head xs) : tail xs)
