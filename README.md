@@ -8,7 +8,9 @@ With GHC version 7+
 
 Dependency
 
-* MissingH Cabal Package. `cabal install MissingH`
+* Gsub Cabal Package. (not listed in hackage)
+
+Vim
 
     $ cp agg.vim ~/.vim/plugin/
 
